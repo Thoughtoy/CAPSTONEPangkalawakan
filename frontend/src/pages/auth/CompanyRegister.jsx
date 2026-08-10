@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CompanyRegister.css";
-
+import "../../styles/CompanyRegister.css";
 function CompanyRegister() {
   const navigate = useNavigate();
 
