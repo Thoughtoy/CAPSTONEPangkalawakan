@@ -1,0 +1,525 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+.applicants-page {
+  min-height: 100vh;
+  display: flex;
+  background: #f4f7fb;
+  color: #0f1f35;
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.applicants-sidebar {
+  width: 320px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #dbe4ee;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.applicants-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 2px 10px 30px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #071f3d;
+}
+
+.applicants-brand-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #0877d1;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.applicants-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.applicants-nav-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #61738b;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 22px;
+  font-family: inherit;
+  font-size: 17px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.applicants-nav-item:hover {
+  background: #eef5fc;
+  color: #0877d1;
+}
+
+.applicants-nav-item.active {
+  background: #0877d1;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 7px 15px rgba(8, 119, 209, 0.14);
+}
+
+.applicants-logout {
+  margin-top: auto;
+  border: none;
+  background: transparent;
+  color: #172b45;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  font-family: inherit;
+  font-size: 17px;
+  cursor: pointer;
+  text-align: left;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.applicants-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.applicants-header {
+  height: 98px;
+  background: #ffffff;
+  border-bottom: 1px solid #dbe4ee;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.applicants-header h1 {
+  margin: 0 0 2px;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #101d31;
+  font-weight: 700;
+}
+
+.applicants-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 17px;
+}
+
+.applicants-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #0877d1;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.applicants-content {
+  padding: 40px 30px 60px;
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.internship-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.internship-tab {
+  border: 1px solid #d9e3ed;
+  background: #ffffff;
+  color: #60738c;
+  border-radius: 24px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.internship-tab:hover {
+  border-color: #0877d1;
+  color: #0877d1;
+}
+
+.internship-tab.active {
+  background: #0877d1;
+  border-color: #0877d1;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+
+/* =========================
+   APPLICANT CARD
+========================= */
+
+.applicant-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applicant-card {
+  background: #ffffff;
+  border: 1px solid #dbe4ee;
+  border-radius: 25px;
+  padding: 24px 25px;
+  box-shadow: 0 6px 16px rgba(31, 59, 89, 0.055);
+}
+
+
+/* =========================
+   APPLICANT TOP
+========================= */
+
+.applicant-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.applicant-person {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.applicant-avatar {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e7f2fc;
+  color: #0877d1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.applicant-person h2 {
+  margin: 2px 0 3px;
+  font-size: 23px;
+  line-height: 1.2;
+  color: #07182f;
+}
+
+.applicant-person p {
+  margin: 0 0 2px;
+  color: #637a96;
+  font-size: 16px;
+}
+
+.applicant-person span {
+  color: #5f7693;
+  font-size: 15px;
+}
+
+.applicant-person strong {
+  font-weight: 500;
+}
+
+
+/* =========================
+   MATCH
+========================= */
+
+.match-section {
+  min-width: 100px;
+  text-align: right;
+}
+
+.match-section > strong {
+  display: block;
+  color: #0da45d;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.match-section > span {
+  display: block;
+  color: #52677f;
+  font-size: 11px;
+  margin-top: 1px;
+  letter-spacing: 0.2px;
+}
+
+.applicant-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.applicant-status.accepted {
+  background: #dff3e8;
+  color: #0b9d59;
+}
+
+.applicant-status.pending {
+  background: #fff0d4;
+  color: #825700;
+}
+
+.applicant-status.rejected {
+  background: #fee3e3;
+  color: #c62828;
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  margin-top: 25px;
+}
+
+.skills-column h3 {
+  margin: 0 0 10px;
+  color: #5e7088;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tags span {
+  background: #e8f1fb;
+  color: #092b58;
+  padding: 6px 15px;
+  border-radius: 18px;
+  font-size: 14px;
+}
+
+.skill-tags.matched span {
+  background: #dff2e8;
+  color: #0a9b59;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.applicant-bottom {
+  border-top: 1px solid #dbe4ee;
+  margin-top: 20px;
+  padding-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.resume-button {
+  border: none;
+  background: #eaf3fd;
+  color: #124a82;
+  border-radius: 17px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.resume-button:hover {
+  background: #dcecfb;
+}
+
+.internship-record {
+  background: #e2f4eb;
+  color: #0b9d5b;
+  border-radius: 20px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.applicant-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accept-button,
+.reject-button {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.accept-button {
+  border: 1px solid #0877d1;
+  background: #0877d1;
+  color: #ffffff;
+}
+
+.accept-button:hover {
+  background: #066abb;
+}
+
+.reject-button {
+  border: 1px solid #dbe4ee;
+  background: #ffffff;
+  color: #e53935;
+}
+
+.reject-button:hover {
+  background: #fff5f5;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty-applicants {
+  background: #ffffff;
+  border: 1px dashed #cbd8e6;
+  border-radius: 24px;
+  padding: 60px;
+  text-align: center;
+  color: #71839a;
+  font-size: 16px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+  .applicants-sidebar {
+    width: 240px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 750px) {
+  .applicants-page {
+    flex-direction: column;
+  }
+
+  .applicants-sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .applicants-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .applicants-logout {
+    margin-top: 20px;
+  }
+
+  .applicants-header {
+    padding: 0 20px;
+  }
+
+  .applicants-content {
+    padding: 25px 16px 40px;
+  }
+
+  .applicant-top {
+    flex-direction: column;
+  }
+
+  .match-section {
+    text-align: left;
+  }
+
+  .applicant-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .applicant-actions {
+    width: 100%;
+  }
+
+  .accept-button,
+  .reject-button {
+    flex: 1;
+  }
+}

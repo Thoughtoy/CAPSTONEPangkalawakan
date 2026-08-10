@@ -19,6 +19,10 @@ import GraduateDashboard from "../pages/graduate/GraduateDashboard";
 
 // Company
 import CompanyDashboard from "../pages/company/CompanyDashboard";
+import CreateInternship from "../pages/company/CreateInternship";
+import MyInternships from "../pages/company/MyInternships";
+import CompanyApplicants from "../pages/company/CompanyApplicants";
+import CompanyProfile from "../pages/company/CompanyProfile";
 
 // Admin / PESO
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -79,11 +83,29 @@ function AppRoutes() {
             COMPANY
         ========================================= */}
 
-        <Route
-          path="/company/dashboard"
-          element={<CompanyDashboard />}
-        />
+<Route
+  path="/company/dashboard"
+  element={<CompanyDashboard />}
+/>
 
+<Route
+  path="/company/internships"
+  element={<MyInternships />}
+/>
+
+<Route
+  path="/company/internships/create"
+  element={<CreateInternship />}
+/>
+
+<Route
+  path="/company/applicants"
+  element={<CompanyApplicants />}
+/>
+<Route
+  path="/company/profile"
+  element={<CompanyProfile />}
+/>
 
         {/* =========================================
             PESO ADMIN

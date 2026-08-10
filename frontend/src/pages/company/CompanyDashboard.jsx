@@ -1,20 +1,36 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "./../../styles/CompanyDashboard.css";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import {
+  GraduationCap,
+  LayoutDashboard,
+  FilePlus2,
+  BriefcaseBusiness,
+  Users,
+  Building2,
+  LogOut,
+  Briefcase,
+  Clock3,
+  CircleCheck,
+  FileText,
+} from "lucide-react";
+
+import "../../styles/CompanyDashboard.css";
 
 function CompanyDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
-
+  const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+
+  // =========================
+  // FETCH COMPANY PROFILE
+  // =========================
 
   const fetchCompany = async () => {
     try {
@@ -35,7 +51,7 @@ function CompanyDashboard() {
           data.message || "Unable to load company profile."
         );
       }
- 
+
       setCompany(data);
     } catch (error) {
       setError(error.message);
@@ -48,327 +64,476 @@ function CompanyDashboard() {
     fetchCompany();
   }, []);
 
-  const handleResubmit = async () => {
-    setError("");
-    setMessage("");
+  // =========================
+  // LOGOUT
+  // =========================
 
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/company/resubmit",
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Unable to resubmit."
-        );
-      }
-
-      setCompany(data.company);
-
-      setMessage(
-        "Company application resubmitted successfully."
-      );
-    } catch (error) {
-      setError(error.message);
-    }
+    navigate("/login");
   };
+
+  // =========================
+  // LOADING
+  // =========================
 
   if (loading) {
     return (
-      <div style={{ padding: "30px" }}>
+      <div className="company-loading">
         Loading company dashboard...
       </div>
     );
   }
 
+  // =========================
+  // COMPANY NAME
+  // =========================
+
+  const companyName =
+    company?.company_name ||
+    user?.name ||
+    "ABC Software Solutions";
+
+  const avatarLetter = companyName
+    .charAt(0)
+    .toUpperCase();
+
+  // =========================
+  // SIDEBAR ACTIVE STATE
+  // =========================
+
+  const isDashboard =
+    location.pathname === "/company/dashboard";
+
+  const isCreateInternship =
+    location.pathname === "/company/internships/create";
+
+  const isMyInternships =
+    location.pathname === "/company/internships";
+
+  const isApplicants =
+    location.pathname === "/company/applicants";
+
+  const isCompanyProfile =
+    location.pathname === "/company/profile";
+
   return (
-  <div className="company-dashboard">
+    <div className="company-dashboard">
 
-    {/* SIDEBAR */}
-    <aside className="company-sidebar">
+     {/* ================= SIDEBAR ================= */}
 
-      <div className="sidebar-logo">
-        SkillBridge
-      </div>
+<aside className="company-sidebar">
 
-      <nav className="sidebar-nav">
+  <div className="sidebar-brand">
+    <div className="sidebar-brand-icon">
+      <GraduationCap size={24} />
+    </div>
 
-        <button className="sidebar-item active">
-          <span>⌂</span>
-          Dashboard
-        </button>
+    <span>SkillBridge</span>
+  </div>
 
-        <button className="sidebar-item">
-          <span>▣</span>
-          My Internships
-        </button>
+  <nav className="sidebar-nav">
 
-        <button className="sidebar-item">
-          <span>+</span>
-          Post Internship
-        </button>
+    <button
+      type="button"
+      className={`sidebar-item ${
+        location.pathname === "/company/dashboard"
+          ? "active"
+          : ""
+      }`}
+      onClick={() => navigate("/company/dashboard")}
+    >
+      <LayoutDashboard size={20} />
+      <span>Dashboard</span>
+    </button>
 
-        <button className="sidebar-item">
-          <span>♙</span>
-          Applicants
-        </button>
+    <button
+      type="button"
+      className={`sidebar-item ${
+        location.pathname === "/company/internships/create"
+          ? "active"
+          : ""
+      }`}
+      onClick={() =>
+        navigate("/company/internships/create")
+      }
+    >
+      <FilePlus2 size={20} />
+      <span>Create Internship</span>
+    </button>
 
-        <button className="sidebar-item">
-          <span>✓</span>
-          Verification
-        </button>
+    <button
+      type="button"
+      className={`sidebar-item ${
+        location.pathname === "/company/internships"
+          ? "active"
+          : ""
+      }`}
+      onClick={() =>
+        navigate("/company/internships")
+      }
+    >
+      <BriefcaseBusiness size={20} />
+      <span>My Internships</span>
+    </button>
 
-        <button className="sidebar-item">
-          <span>⚙</span>
-          Settings
-        </button>
+    <button
+      type="button"
+      className={`sidebar-item ${
+        location.pathname === "/company/applicants"
+          ? "active"
+          : ""
+      }`}
+      onClick={() =>
+        navigate("/company/applicants")
+      }
+    >
+      <Users size={20} />
+      <span>Applicants</span>
+    </button>
 
-      </nav>
+<button
+  type="button"
+  className="sidebar-item"
+  onClick={() =>
+    navigate("/company/profile")
+  }
+>
+  <Building2 size={20} />
+  <span>Company Profile</span>
+</button>
 
-      <button
-        className="sidebar-logout"
-        onClick={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          navigate("/login");
-        }}
-      >
-        Logout
-      </button>
+  </nav>
 
-    </aside>
+  <button
+    type="button"
+    className="sidebar-logout"
+    onClick={handleLogout}
+  >
+    <LogOut size={20} />
+    <span>Logout</span>
+  </button>
 
-
-    {/* MAIN CONTENT */}
-    <main className="company-main">
-
-      <header className="dashboard-header">
-        <div>
-          <h1>Dashboard</h1>
-
-          <p>
-            Welcome back,{" "}
-            <strong>{user?.name || "Company"}</strong>
-          </p>
-        </div>
-      </header>
-
-
-      {/* ERROR */}
-      {error && (
-        <div className="company-alert company-alert-error">
-          {error}
-        </div>
-      )}
-
-
-      {/* SUCCESS */}
-      {message && (
-        <div className="company-alert company-alert-success">
-          {message}
-        </div>
-      )}
+</aside>
 
 
-      {company && (
-        <>
+      {/* =====================================================
+          MAIN CONTENT
+      ===================================================== */}
 
-          {/* STAT CARDS */}
-          <section className="dashboard-cards">
+      <main className="company-main">
 
-            <div className="dashboard-card">
-              <span className="card-label">
-                Verification Status
-              </span>
+        {/* ================= HEADER ================= */}
 
-              <strong className="card-value">
-                {company.status}
-              </strong>
+        <header className="company-header">
+
+          <div className="company-header-info">
+
+            <h1>
+              Company Dashboard
+            </h1>
+
+            <p>
+              {companyName}
+            </p>
+
+          </div>
+
+
+          <div className="company-avatar">
+            {avatarLetter}
+          </div>
+
+        </header>
+
+
+        {/* ================= CONTENT ================= */}
+
+        <div className="company-content">
+
+          {/* ERROR */}
+
+          {error && (
+            <div className="company-alert company-alert-error">
+              {error}
+            </div>
+          )}
+
+
+          {/* =================================================
+              STAT CARDS
+          ================================================= */}
+
+          <section className="dashboard-stat-grid">
+
+            {/* TOTAL INTERNSHIPS */}
+
+            <div className="stat-card">
+
+              <div>
+                <span>
+                  Total Internships
+                </span>
+
+                <strong>
+                  2
+                </strong>
+              </div>
+
+              <div className="stat-icon blue">
+                <Briefcase size={24} />
+              </div>
+
             </div>
 
-            <div className="dashboard-card">
-              <span className="card-label">
-                Internship Posts
-              </span>
 
-              <strong className="card-value">
-                0
-              </strong>
+            {/* APPLICATIONS */}
+
+            <div className="stat-card">
+
+              <div>
+                <span>
+                  Applications Received
+                </span>
+
+                <strong>
+                  2
+                </strong>
+              </div>
+
+              <div className="stat-icon gray">
+                <Users size={24} />
+              </div>
+
             </div>
 
-            <div className="dashboard-card">
-              <span className="card-label">
-                Applicants
-              </span>
 
-              <strong className="card-value">
-                0
-              </strong>
+            {/* ACCEPTED */}
+
+            <div className="stat-card">
+
+              <div>
+                <span>
+                  Accepted Applicants
+                </span>
+
+                <strong>
+                  1
+                </strong>
+              </div>
+
+              <div className="stat-icon green">
+                <CircleCheck size={24} />
+              </div>
+
+            </div>
+
+
+            {/* PENDING */}
+
+            <div className="stat-card">
+
+              <div>
+                <span>
+                  Pending Applicants
+                </span>
+
+                <strong>
+                  1
+                </strong>
+              </div>
+
+              <div className="stat-icon yellow">
+                <Clock3 size={24} />
+              </div>
+
             </div>
 
           </section>
 
 
-          {/* COMPANY INFORMATION */}
-          <section className="dashboard-section">
+          {/* =================================================
+              LOWER CONTENT
+          ================================================= */}
 
-            <h2>Company Information</h2>
+          <section className="dashboard-lower-grid">
 
-            <div className="company-info-grid">
+            {/* ================= LATEST APPLICANTS ================= */}
 
-              <div>
-                <span>Company Name</span>
-                <strong>{company.company_name}</strong>
-              </div>
+            <div className="dashboard-panel">
 
-              <div>
-                <span>Business Type</span>
-                <strong>{company.business_type}</strong>
-              </div>
+              <div className="panel-header">
 
-              <div>
-                <span>Contact Person</span>
-                <strong>{company.contact_person}</strong>
-              </div>
-
-              <div>
-                <span>Email</span>
-                <strong>{company.email}</strong>
-              </div>
-
-            </div>
-
-          </section>
-
-
-          {/* VERIFICATION */}
-          <section className="dashboard-section">
-
-            <div className="section-heading">
-              <div>
-                <h2>Verification Status</h2>
-                <p>
-                  Your company verification information.
-                </p>
-              </div>
-            </div>
-
-
-            {company.status === "pending" && (
-              <div className="verification pending">
-
-                <h3>⏳ Pending Verification</h3>
-
-                <p>
-                  Your company application is currently
-                  being reviewed by PESO.
-                </p>
-
-                <p>
-                  Internship posting will become available
-                  after approval.
-                </p>
-
-              </div>
-            )}
-
-
-            {company.status === "rejected" && (
-              <div className="verification rejected">
-
-                <h3>Application Rejected</h3>
-
-                <p>
-                  <strong>Reason:</strong>
-                </p>
-
-                <p>
-                  {company.rejection_reason ||
-                    "No reason provided."}
-                </p>
+                <h2>
+                  Latest applicants
+                </h2>
 
                 <button
-                  className="dashboard-button"
-                  onClick={handleResubmit}
-                >
-                  Resubmit Application
-                </button>
-
-              </div>
-            )}
-
-
-            {company.status === "approved" && (
-              <div className="verification approved">
-
-                <h3>✓ Company Verified</h3>
-
-                <p>
-                  Your company has been approved by PESO.
-                </p>
-
-                <button
-                  className="dashboard-button"
+                  type="button"
+                  className="view-all-button"
                   onClick={() =>
-                    navigate("/company/internships/create")
+                    navigate("/company/applicants")
                   }
                 >
-                  Create Internship
+                  View all
                 </button>
 
               </div>
-            )}
-
-          </section>
 
 
-          {/* DOCUMENTS */}
-          <section className="dashboard-section">
+              <div className="applicant-list">
 
-            <h2>Verification Documents</h2>
+                {/* MARCO */}
 
-            {company.documents?.length > 0 ? (
-              company.documents.map((document) => (
-                <div
-                  className="document-item"
-                  key={document.id}
-                >
-                  {document.document_type}
+                <div className="applicant-item">
+
+                  <div>
+                    <strong>
+                      Marco Dela Cruz
+                    </strong>
+
+                    <span>
+                      Backend Developer Intern
+                    </span>
+                  </div>
+
+
+                  <div className="applicant-result">
+
+                    <strong>
+                      100%
+                    </strong>
+
+                    <span className="status-badge accepted">
+                      Accepted
+                    </span>
+
+                  </div>
+
                 </div>
-              ))
-            ) : (
-              <p className="empty-text">
-                No verification documents uploaded yet.
-              </p>
-            )}
 
-            <button
-              className="dashboard-button secondary"
-              onClick={() =>
-                navigate("/company/verification")
-              }
-            >
-              Manage Verification
-            </button>
+
+                {/* ANDREA */}
+
+                <div className="applicant-item">
+
+                  <div>
+                    <strong>
+                      Andrea Villanueva
+                    </strong>
+
+                    <span>
+                      Frontend Developer Intern
+                    </span>
+                  </div>
+
+
+                  <div className="applicant-result">
+
+                    <strong>
+                      75%
+                    </strong>
+
+                    <span className="status-badge pending">
+                      Pending
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            {/* ================= YOUR LISTINGS ================= */}
+
+            <div className="dashboard-panel">
+
+              <div className="panel-header">
+
+                <h2>
+                  Your listings
+                </h2>
+
+                <button
+                  type="button"
+                  className="new-listing-button"
+                  onClick={() =>
+                    navigate(
+                      "/company/internships/create"
+                    )
+                  }
+                >
+                  <FileText size={18} />
+
+                  <span>
+                    New
+                  </span>
+
+                </button>
+
+              </div>
+
+
+              <div className="listing-list">
+
+                {/* FRONTEND */}
+
+                <div className="listing-item">
+
+                  <div>
+                    <strong>
+                      Frontend Developer Intern
+                    </strong>
+
+                    <span>
+                      Cebu City (Hybrid)
+                    </span>
+                  </div>
+
+                  <span className="status-badge open">
+                    Open
+                  </span>
+
+                </div>
+
+
+                {/* BACKEND */}
+
+                <div className="listing-item">
+
+                  <div>
+                    <strong>
+                      Backend Developer Intern
+                    </strong>
+
+                    <span>
+                      Remote
+                    </span>
+                  </div>
+
+                  <span className="status-badge open">
+                    Open
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
 
           </section>
 
-        </>
-      )}
+        </div>
 
-    </main>
+      </main>
 
-  </div>
-);
+    </div>
+  );
 }
 
 export default CompanyDashboard;
