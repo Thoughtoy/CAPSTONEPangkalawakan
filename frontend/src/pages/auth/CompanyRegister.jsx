@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./CompanyRegister.css";
 
 function CompanyRegister() {
   const navigate = useNavigate();
@@ -131,135 +132,138 @@ function CompanyRegister() {
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    padding: "12px",
-    marginTop: "6px",
-    marginBottom: "15px",
-    boxSizing: "border-box",
-  };
 
-  return (
-    <div style={{ padding: "40px", maxWidth: "700px", margin: "auto" }}>
-      <button onClick={() => navigate("/register")}>
+ return (
+  <div className="company-register-page">
+    <div className="company-register-container">
+
+      <button
+        type="button"
+        className="company-back-button"
+        onClick={() => navigate("/register")}
+      >
         ← Back
       </button>
 
-      <h1>Company Application</h1>
+      <h1 className="company-title">Company Application</h1>
 
-      <p>
+      <p className="company-description">
         Complete your company information. Your application will
         be reviewed by PESO before internship posting is enabled.
       </p>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="company-error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
-        <h2>Account Information</h2>
+        <h2 className="company-section-title">Account Information</h2>
 
         <label>Company Name</label>
-        <input
-          style={inputStyle}
-          name="company_name"
-          value={form.company_name}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="company_name"
+  value={form.company_name}
+  onChange={handleChange}
+  required
+/>
 
         <label>Email</label>
-        <input
-          style={inputStyle}
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="email"
+  value={form.email}
+  onChange={handleChange}
+  required
+/>
 
         <label>Password</label>
-        <input
-          style={inputStyle}
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="password"
+  value={form.password}
+  onChange={handleChange}
+  required
+/>
 
         <label>Confirm Password</label>
-        <input
-          style={inputStyle}
-          type="password"
-          name="password_confirmation"
-          value={form.password_confirmation}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="password_confirmation"
+  value={form.password_confirmation}
+  onChange={handleChange}
+  required
+/>
 
         <hr />
 
-        <h2>Company Information</h2>
+       <h2 className="company-section-title">Company Information</h2>
 
         <label>Business Type</label>
-        <input
-          style={inputStyle}
-          name="business_type"
-          value={form.business_type}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="business_type"
+  value={form.business_type}
+  onChange={handleChange}
+  required
+/>
 
         <label>Description</label>
-        <textarea
-          style={inputStyle}
-          name="description"
-          rows="4"
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
+<textarea
+className="company-input company-textarea"
+  name="description"
+  rows="4"
+  value={form.description}
+  onChange={handleChange}
+  required
+/>
 
         <label>Address</label>
-        <textarea
-          style={inputStyle}
-          name="address"
-          rows="3"
-          value={form.address}
-          onChange={handleChange}
-          required
-        />
+<textarea
+className="company-input company-textarea"
+  name="address"
+  rows="4"
+  value={form.address}
+  onChange={handleChange}
+  required
+/>
 
         <label>Contact Person</label>
-        <input
-          style={inputStyle}
-          name="contact_person"
-          value={form.contact_person}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="contact_person"
+  value={form.contact_person}
+  onChange={handleChange}
+  required
+/>
 
         <label>Contact Number</label>
-        <input
-          style={inputStyle}
-          name="contact_number"
-          value={form.contact_number}
-          onChange={handleChange}
-          required
-        />
+<input
+  className="company-input"
+  name="contact_number"
+  value={form.contact_number}
+  onChange={handleChange}
+  required
+/>
 
         <label>Website (Optional)</label>
-        <input
-          style={inputStyle}
-          name="website"
-          value={form.website}
-          onChange={handleChange}
-        />
+<input
+  className="company-input"
+  name="website"
+  value={form.website}
+  onChange={handleChange}
+  required
+/>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Submitting..." : "Submit Company Application"}
-        </button>
-      </form>
+        <button
+  type="submit"
+  className="company-submit-button"
+  disabled={loading}
+>
+  {loading ? "Submitting..." : "Submit Company Application"}
+</button>
+                  </form>
+
     </div>
+  </div>
   );
 }
 
