@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -70,101 +71,76 @@ function Login() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f4f6f8",
-      }}
-    >
-      <div
-        style={{
-          width: "380px",
-          background: "white",
-          padding: "35px",
-          borderRadius: "12px",
-          boxShadow: "0 5px 20px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h1>SkillBridge</h1>
+  <div className="login-page">
+    <div className="login-container">
 
-        <h2>Login</h2>
+      <h1 className="login-brand">
+        SkillBridge
+      </h1>
 
-        <p>
-          Sign in to continue to your account.
-        </p>
+      <h2 className="login-title">
+        Login
+      </h2>
 
-        {error && (
-          <div
-            style={{
-              background: "#fee2e2",
-              padding: "10px",
-              marginBottom: "15px",
-              borderRadius: "6px",
-            }}
-          >
-            {error}
-          </div>
-        )}
+      <p className="login-description">
+        Sign in to continue to your account.
+      </p>
 
-        <form onSubmit={handleLogin}>
+      {error && (
+        <div className="login-error">
+          {error}
+        </div>
+      )}
 
-          <div style={{ marginBottom: "15px" }}>
-            <label>Email</label>
+      <form onSubmit={handleLogin}>
 
-            <input
-              type="email"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-              required
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginTop: "5px",
-                boxSizing: "border-box",
-              }}
-            />
-          </div>
+        <div className="login-field">
+          <label>Email</label>
 
-          <div style={{ marginBottom: "20px" }}>
-            <label>Password</label>
+          <input
+            className="login-input"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-            <input
-              type="password"
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
-              required
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginTop: "5px",
-                boxSizing: "border-box",
-              }}
-            />
-          </div>
+        <div className="login-field">
+          <label>Password</label>
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: "100%",
-              padding: "12px",
-              cursor: "pointer",
-            }}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+          <input
+            className="login-input"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-        </form>
-      </div>
+        <button
+          type="submit"
+          className="login-button"
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+      </form>
+
+      <p className="login-register">
+        Don't have an account?
+        <span
+          className="login-register-link"
+          onClick={() => navigate("/register")}
+        >
+          Register here
+        </span>
+      </p>
+
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
