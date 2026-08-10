@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./GraduateRegister.css";
 function GraduateRegister() {
   const navigate = useNavigate();
 
@@ -97,24 +97,41 @@ function GraduateRegister() {
   };
 
   return (
-    <div style={{ padding: "40px", maxWidth: "500px", margin: "auto" }}>
-      <button onClick={() => navigate("/register")}>
+  <div className="graduate-register-page">
+    <div className="graduate-register-container">
+
+      <button
+        type="button"
+        className="graduate-back-button"
+        onClick={() => navigate("/register")}
+      >
         ← Back
       </button>
 
-      <h1>Graduate Registration</h1>
+      <h1 className="graduate-title">
+        Graduate Registration
+      </h1>
 
-      <p>
+      <p className="graduate-description">
         Create your account first. You can complete your profile,
         skills, and resume after entering your dashboard.
       </p>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && (
+        <p className="graduate-error">
+          {error}
+        </p>
+      )}
 
       <form onSubmit={handleSubmit}>
+
+        <h2 className="graduate-section-title">
+          Account Information
+        </h2>
+
         <label>Full Name</label>
         <input
-          style={inputStyle}
+          className="graduate-input"
           name="name"
           value={form.name}
           onChange={handleChange}
@@ -123,7 +140,7 @@ function GraduateRegister() {
 
         <label>Email</label>
         <input
-          style={inputStyle}
+          className="graduate-input"
           type="email"
           name="email"
           value={form.email}
@@ -133,7 +150,7 @@ function GraduateRegister() {
 
         <label>Password</label>
         <input
-          style={inputStyle}
+          className="graduate-input"
           type="password"
           name="password"
           value={form.password}
@@ -143,7 +160,7 @@ function GraduateRegister() {
 
         <label>Confirm Password</label>
         <input
-          style={inputStyle}
+          className="graduate-input"
           type="password"
           name="password_confirmation"
           value={form.password_confirmation}
@@ -151,12 +168,20 @@ function GraduateRegister() {
           required
         />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Creating Account..." : "Create Graduate Account"}
+        <button
+          type="submit"
+          className="graduate-submit-button"
+          disabled={loading}
+        >
+          {loading
+            ? "Creating Account..."
+            : "Create Graduate Account"}
         </button>
+
       </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default GraduateRegister;
