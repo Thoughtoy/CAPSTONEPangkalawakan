@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/CompanyRegister.css";
+
 function CompanyRegister() {
   const navigate = useNavigate();
 
@@ -131,138 +132,247 @@ function CompanyRegister() {
     }
   };
 
+  return (
+    <div className="company-register-page">
 
- return (
-  <div className="company-register-page">
-    <div className="company-register-container">
+      {/* HEADER */}
+      <header className="company-header">
 
-      <button
-        type="button"
-        className="company-back-button"
-        onClick={() => navigate("/register")}
-      >
-        ← Back
-      </button>
+        <div className="company-logo">
+          <div className="company-logo-icon">
+            🎓
+          </div>
 
-      <h1 className="company-title">Company Application</h1>
-
-      <p className="company-description">
-        Complete your company information. Your application will
-        be reviewed by PESO before internship posting is enabled.
-      </p>
-
-      {error && <p className="company-error">{error}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <h2 className="company-section-title">Account Information</h2>
-
-        <label>Company Name</label>
-<input
-  className="company-input"
-  name="company_name"
-  value={form.company_name}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Email</label>
-<input
-  className="company-input"
-  name="email"
-  value={form.email}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Password</label>
-<input
-  className="company-input"
-  name="password"
-  value={form.password}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Confirm Password</label>
-<input
-  className="company-input"
-  name="password_confirmation"
-  value={form.password_confirmation}
-  onChange={handleChange}
-  required
-/>
-
-        <hr />
-
-       <h2 className="company-section-title">Company Information</h2>
-
-        <label>Business Type</label>
-<input
-  className="company-input"
-  name="business_type"
-  value={form.business_type}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Description</label>
-<textarea
-className="company-input company-textarea"
-  name="description"
-  rows="4"
-  value={form.description}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Address</label>
-<textarea
-className="company-input company-textarea"
-  name="address"
-  rows="4"
-  value={form.address}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Contact Person</label>
-<input
-  className="company-input"
-  name="contact_person"
-  value={form.contact_person}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Contact Number</label>
-<input
-  className="company-input"
-  name="contact_number"
-  value={form.contact_number}
-  onChange={handleChange}
-  required
-/>
-
-        <label>Website (Optional)</label>
-<input
-  className="company-input"
-  name="website"
-  value={form.website}
-  onChange={handleChange}
-  required
-/>
+          <span>SkillBridge</span>
+        </div>
 
         <button
-  type="submit"
-  className="company-submit-button"
-  disabled={loading}
->
-  {loading ? "Submitting..." : "Submit Company Application"}
-</button>
-                  </form>
+          type="button"
+          className="company-login-link"
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </button>
+
+      </header>
+
+      {/* MAIN */}
+      <main className="company-register-main">
+
+        <div className="company-register-content">
+
+          <h1 className="company-title">
+            Create your account
+          </h1>
+
+          <p className="company-description">
+            Graduates get matched instantly. Companies are reviewed
+            by a PESO administrator before posting.
+          </p>
+
+          {/* ACCOUNT TYPE */}
+          <div className="company-type-switch">
+
+            <button
+              type="button"
+              className="company-type"
+              onClick={() => navigate("/register/graduate")}
+            >
+              🎓 Graduate
+            </button>
+
+            <button
+              type="button"
+              className="company-type active"
+            >
+              🏢 Company
+            </button>
+
+          </div>
+
+          {/* FORM CARD */}
+          <div className="company-register-container">
+
+            {error && (
+              <div className="company-error">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+
+              {/* COMPANY INFORMATION */}
+
+              <div className="company-form-group">
+                <label>Company name</label>
+
+                <input
+                  className="company-input"
+                  type="text"
+                  name="company_name"
+                  placeholder="Pixel Forge Studio"
+                  value={form.company_name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Email address</label>
+
+                <input
+                  className="company-input"
+                  type="email"
+                  name="email"
+                  placeholder="company@example.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Business type</label>
+
+                <input
+                  className="company-input"
+                  type="text"
+                  name="business_type"
+                  placeholder="Information Technology"
+                  value={form.business_type}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Description</label>
+
+                <textarea
+                  className="company-input company-textarea"
+                  name="description"
+                  placeholder="Tell us about your company"
+                  rows="4"
+                  value={form.description}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Address</label>
+
+                <textarea
+                  className="company-input company-textarea"
+                  name="address"
+                  placeholder="Company address"
+                  rows="3"
+                  value={form.address}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Contact person</label>
+
+                <input
+                  className="company-input"
+                  type="text"
+                  name="contact_person"
+                  placeholder="Juan Dela Cruz"
+                  value={form.contact_person}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Contact number</label>
+
+                <input
+                  className="company-input"
+                  type="text"
+                  name="contact_number"
+                  placeholder="09123456789"
+                  value={form.contact_number}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Website <span>(Optional)</span></label>
+
+                <input
+                  className="company-input"
+                  type="text"
+                  name="website"
+                  placeholder="https://example.com"
+                  value={form.website}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* PASSWORD */}
+
+              <div className="company-form-group">
+                <label>Password</label>
+
+                <input
+                  className="company-input"
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="company-form-group">
+                <label>Confirm password</label>
+
+                <input
+                  className="company-input"
+                  type="password"
+                  name="password_confirmation"
+                  value={form.password_confirmation}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="company-submit-button"
+                disabled={loading}
+              >
+                {loading
+                  ? "Submitting..."
+                  : "Submit company application"}
+              </button>
+
+            </form>
+
+          </div>
+
+          {/* SIGN IN */}
+
+          <p className="company-signin">
+            Already registered?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+            >
+              Sign in
+            </button>
+          </p>
+
+        </div>
+
+      </main>
 
     </div>
-  </div>
   );
 }
 

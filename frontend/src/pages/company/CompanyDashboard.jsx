@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./../../styles/CompanyDashboard.css";
 
 function CompanyDashboard() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function CompanyDashboard() {
           data.message || "Unable to load company profile."
         );
       }
-
+ 
       setCompany(data);
     } catch (error) {
       setError(error.message);
@@ -90,81 +91,181 @@ function CompanyDashboard() {
   }
 
   return (
-    <div
-      style={{
-        padding: "30px",
-        maxWidth: "900px",
-        margin: "auto",
-      }}
-    >
-      <h1>Company Dashboard</h1>
+  <div className="company-dashboard">
 
-      <p>
-        Welcome, <strong>{user?.name}</strong>
-      </p>
+    {/* SIDEBAR */}
+    <aside className="company-sidebar">
 
+      <div className="sidebar-logo">
+        SkillBridge
+      </div>
+
+      <nav className="sidebar-nav">
+
+        <button className="sidebar-item active">
+          <span>⌂</span>
+          Dashboard
+        </button>
+
+        <button className="sidebar-item">
+          <span>▣</span>
+          My Internships
+        </button>
+
+        <button className="sidebar-item">
+          <span>+</span>
+          Post Internship
+        </button>
+
+        <button className="sidebar-item">
+          <span>♙</span>
+          Applicants
+        </button>
+
+        <button className="sidebar-item">
+          <span>✓</span>
+          Verification
+        </button>
+
+        <button className="sidebar-item">
+          <span>⚙</span>
+          Settings
+        </button>
+
+      </nav>
+
+      <button
+        className="sidebar-logout"
+        onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate("/login");
+        }}
+      >
+        Logout
+      </button>
+
+    </aside>
+
+
+    {/* MAIN CONTENT */}
+    <main className="company-main">
+
+      <header className="dashboard-header">
+        <div>
+          <h1>Dashboard</h1>
+
+          <p>
+            Welcome back,{" "}
+            <strong>{user?.name || "Company"}</strong>
+          </p>
+        </div>
+      </header>
+
+
+      {/* ERROR */}
       {error && (
-        <div
-          style={{
-            background: "#fee2e2",
-            padding: "12px",
-            marginBottom: "20px",
-          }}
-        >
+        <div className="company-alert company-alert-error">
           {error}
         </div>
       )}
 
+
+      {/* SUCCESS */}
       {message && (
-        <div
-          style={{
-            background: "#dcfce7",
-            padding: "12px",
-            marginBottom: "20px",
-          }}
-        >
+        <div className="company-alert company-alert-success">
           {message}
         </div>
       )}
 
+
       {company && (
         <>
-          <div
-            style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              marginTop: "20px",
-            }}
-          >
-            <h2>{company.company_name}</h2>
 
-            <p>
-              <strong>Business Type:</strong>{" "}
-              {company.business_type}
-            </p>
+          {/* STAT CARDS */}
+          <section className="dashboard-cards">
 
-            <p>
-              <strong>Contact Person:</strong>{" "}
-              {company.contact_person}
-            </p>
+            <div className="dashboard-card">
+              <span className="card-label">
+                Verification Status
+              </span>
 
-            <p>
-              <strong>Email:</strong>{" "}
-              {company.email}
-            </p>
-          </div>
+              <strong className="card-value">
+                {company.status}
+              </strong>
+            </div>
 
-          <div
-            style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              marginTop: "20px",
-            }}
-          >
-            <h2>Verification Status</h2>
+            <div className="dashboard-card">
+              <span className="card-label">
+                Internship Posts
+              </span>
+
+              <strong className="card-value">
+                0
+              </strong>
+            </div>
+
+            <div className="dashboard-card">
+              <span className="card-label">
+                Applicants
+              </span>
+
+              <strong className="card-value">
+                0
+              </strong>
+            </div>
+
+          </section>
+
+
+          {/* COMPANY INFORMATION */}
+          <section className="dashboard-section">
+
+            <h2>Company Information</h2>
+
+            <div className="company-info-grid">
+
+              <div>
+                <span>Company Name</span>
+                <strong>{company.company_name}</strong>
+              </div>
+
+              <div>
+                <span>Business Type</span>
+                <strong>{company.business_type}</strong>
+              </div>
+
+              <div>
+                <span>Contact Person</span>
+                <strong>{company.contact_person}</strong>
+              </div>
+
+              <div>
+                <span>Email</span>
+                <strong>{company.email}</strong>
+              </div>
+
+            </div>
+
+          </section>
+
+
+          {/* VERIFICATION */}
+          <section className="dashboard-section">
+
+            <div className="section-heading">
+              <div>
+                <h2>Verification Status</h2>
+                <p>
+                  Your company verification information.
+                </p>
+              </div>
+            </div>
+
 
             {company.status === "pending" && (
-              <div>
+              <div className="verification pending">
+
                 <h3>⏳ Pending Verification</h3>
 
                 <p>
@@ -176,12 +277,15 @@ function CompanyDashboard() {
                   Internship posting will become available
                   after approval.
                 </p>
+
               </div>
             )}
 
+
             {company.status === "rejected" && (
-              <div>
-                <h3>❌ Application Rejected</h3>
+              <div className="verification rejected">
+
+                <h3>Application Rejected</h3>
 
                 <p>
                   <strong>Reason:</strong>
@@ -193,74 +297,78 @@ function CompanyDashboard() {
                 </p>
 
                 <button
+                  className="dashboard-button"
                   onClick={handleResubmit}
-                  style={{
-                    padding: "10px 20px",
-                    marginTop: "10px",
-                  }}
                 >
                   Resubmit Application
                 </button>
+
               </div>
             )}
 
+
             {company.status === "approved" && (
-              <div>
-                <h3>✅ Company Verified</h3>
+              <div className="verification approved">
+
+                <h3>✓ Company Verified</h3>
 
                 <p>
                   Your company has been approved by PESO.
                 </p>
 
                 <button
+                  className="dashboard-button"
                   onClick={() =>
                     navigate("/company/internships/create")
                   }
-                  style={{
-                    padding: "10px 20px",
-                  }}
                 >
                   Create Internship
                 </button>
+
               </div>
             )}
-          </div>
 
-          <div
-            style={{
-              border: "1px solid #ddd",
-              padding: "20px",
-              marginTop: "20px",
-            }}
-          >
+          </section>
+
+
+          {/* DOCUMENTS */}
+          <section className="dashboard-section">
+
             <h2>Verification Documents</h2>
 
             {company.documents?.length > 0 ? (
               company.documents.map((document) => (
-                <div key={document.id}>
+                <div
+                  className="document-item"
+                  key={document.id}
+                >
                   {document.document_type}
                 </div>
               ))
             ) : (
-              <p>No verification documents uploaded yet.</p>
+              <p className="empty-text">
+                No verification documents uploaded yet.
+              </p>
             )}
 
             <button
+              className="dashboard-button secondary"
               onClick={() =>
                 navigate("/company/verification")
               }
-              style={{
-                marginTop: "10px",
-                padding: "10px 20px",
-              }}
             >
               Manage Verification
             </button>
-          </div>
+
+          </section>
+
         </>
       )}
-    </div>
-  );
+
+    </main>
+
+  </div>
+);
 }
 
 export default CompanyDashboard;

@@ -8,6 +8,8 @@ function GraduateRegister() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    school: "",
+    course: "",
     password: "",
     password_confirmation: "",
   });
@@ -38,7 +40,10 @@ function GraduateRegister() {
             Accept: "application/json",
           },
           body: JSON.stringify({
-            ...form,
+            name: form.name,
+            email: form.email,
+            password: form.password,
+            password_confirmation: form.password_confirmation,
             role: "graduate",
           }),
         }
@@ -52,7 +57,7 @@ function GraduateRegister() {
         );
       }
 
-      // Login automatically after registration
+      // Automatically login after registration
       const loginResponse = await fetch(
         "http://127.0.0.1:8000/api/login",
         {
@@ -89,100 +94,181 @@ function GraduateRegister() {
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    padding: "12px",
-    marginTop: "6px",
-    marginBottom: "15px",
-    boxSizing: "border-box",
-  };
-
   return (
-  <div className="graduate-register-page">
-    <div className="graduate-register-container">
+    <div className="graduate-register-page">
 
-      <button
-        type="button"
-        className="graduate-back-button"
-        onClick={() => navigate("/register")}
-      >
-        ← Back
-      </button>
-
-      <h1 className="graduate-title">
-        Graduate Registration
-      </h1>
-
-      <p className="graduate-description">
-        Create your account first. You can complete your profile,
-        skills, and resume after entering your dashboard.
-      </p>
-
-      {error && (
-        <p className="graduate-error">
-          {error}
-        </p>
-      )}
-
-      <form onSubmit={handleSubmit}>
-
-        <h2 className="graduate-section-title">
-          Account Information
-        </h2>
-
-        <label>Full Name</label>
-        <input
-          className="graduate-input"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Email</label>
-        <input
-          className="graduate-input"
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Password</label>
-        <input
-          className="graduate-input"
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Confirm Password</label>
-        <input
-          className="graduate-input"
-          type="password"
-          name="password_confirmation"
-          value={form.password_confirmation}
-          onChange={handleChange}
-          required
-        />
+      {/* HEADER */}
+      <header className="graduate-header">
+        <div className="graduate-logo">
+          <div className="graduate-logo-icon">🎓</div>
+          <span>SkillBridge</span>
+        </div>
 
         <button
-          type="submit"
-          className="graduate-submit-button"
-          disabled={loading}
+          type="button"
+          className="graduate-login-link"
+          onClick={() => navigate("/login")}
         >
-          {loading
-            ? "Creating Account..."
-            : "Create Graduate Account"}
+          Login
         </button>
+      </header>
 
-      </form>
+      {/* MAIN CONTENT */}
+      <main className="graduate-register-main">
+
+        <div className="graduate-register-content">
+
+          <h1 className="graduate-title">
+            Create your account
+          </h1>
+
+          <p className="graduate-description">
+            Graduates get matched instantly. Companies are reviewed
+            by a PESO administrator before posting.
+          </p>
+
+          {/* ACCOUNT TYPE */}
+          <div className="register-type-switch">
+
+            <button
+              type="button"
+              className="register-type active"
+            >
+              🎓 Graduate
+            </button>
+
+            <button
+              type="button"
+              className="register-type"
+              onClick={() => navigate("/register/company")}
+            >
+              🏢 Company
+            </button>
+
+          </div>
+
+          {/* FORM CARD */}
+          <div className="graduate-register-container">
+
+            {error && (
+              <div className="graduate-error">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+
+              <div className="graduate-form-group">
+                <label>Full name</label>
+
+                <input
+                  className="graduate-input"
+                  type="text"
+                  name="name"
+                  placeholder="Juan Dela Cruz"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="graduate-form-group">
+                <label>Email address</label>
+
+                <input
+                  className="graduate-input"
+                  type="email"
+                  name="email"
+                  placeholder="juan@student.ph"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="graduate-form-group">
+                <label>School</label>
+
+                <input
+                  className="graduate-input"
+                  type="text"
+                  name="school"
+                  placeholder="University of San Carlos"
+                  value={form.school}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="graduate-form-group">
+                <label>Course</label>
+
+                <input
+                  className="graduate-input"
+                  type="text"
+                  name="course"
+                  placeholder="BS Information Technology"
+                  value={form.course}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="graduate-form-group">
+                <label>Password</label>
+
+                <input
+                  className="graduate-input"
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="graduate-form-group">
+                <label>Confirm password</label>
+
+                <input
+                  className="graduate-input"
+                  type="password"
+                  name="password_confirmation"
+                  value={form.password_confirmation}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="graduate-submit-button"
+                disabled={loading}
+              >
+                {loading
+                  ? "Creating account..."
+                  : "Create graduate account"}
+              </button>
+
+            </form>
+          </div>
+
+          {/* SIGN IN */}
+          <p className="graduate-signin">
+            Already registered?{" "}
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+            >
+              Sign in
+            </button>
+          </p>
+
+        </div>
+
+      </main>
     </div>
-  </div>
-);
+  );
 }
 
 export default GraduateRegister;
