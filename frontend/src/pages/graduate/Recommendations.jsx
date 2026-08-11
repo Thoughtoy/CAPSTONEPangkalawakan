@@ -175,7 +175,7 @@ function GraduateRecommendations() {
               <button
                 type="button"
                 className="view-all-button"
-                onClick={() => navigate("/graduate/internships/browse")}
+                onClick={() => navigate("/graduate/internships")}
               >
                 Browse All
               </button>
