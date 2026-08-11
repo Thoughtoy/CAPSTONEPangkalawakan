@@ -16,6 +16,11 @@ import ForgotPassword from "../pages/auth/ForgotPassword";
 
 // Graduate
 import GraduateDashboard from "../pages/graduate/GraduateDashboard";
+import GraduateProfile from "../pages/graduate/Profile";
+import GraduateInternships from "../pages/graduate/Internships";  
+import GraduateApplications from "../pages/graduate/Applications";
+import GraduateSkills from "../pages/graduate/Skills";
+import GraduateRecommendations from "../pages/graduate/Recommendations";
 
 // Company
 import CompanyDashboard from "../pages/company/CompanyDashboard";
@@ -76,6 +81,26 @@ function AppRoutes() {
         <Route
           path="/graduate/dashboard"
           element={<GraduateDashboard />}
+        />
+        <Route
+          path="/graduate/profile"
+          element={<GraduateProfile />}
+        />
+        <Route
+          path="/graduate/internships"
+          element={<GraduateInternships />}
+        />
+        <Route
+          path="/graduate/skills"
+          element={<GraduateSkills />}
+        />
+        <Route
+          path="/graduate/applications"
+          element={<GraduateApplications />}
+        />
+        <Route
+          path="/graduate/recommendations"
+          element={<GraduateRecommendations />}
         />
 
 

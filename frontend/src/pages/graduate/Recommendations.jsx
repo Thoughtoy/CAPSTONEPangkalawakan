@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   GraduationCap,
@@ -9,12 +9,12 @@ import {
   Star,
   User,
   LogOut,
-  Plus,
-  Trash2,
+  MapPin,
+  Briefcase,
 } from "lucide-react";
-import "../../styles/GraduateDashboard.css"; // reuse same CSS
+import "../../styles/GraduateDashboard.css";
 
-function GraduateSkills() {
+function GraduateRecommendations() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,34 +30,41 @@ function GraduateSkills() {
   const userName = storedUser?.name || "Guest";
   const avatarLetter = userName.charAt(0).toUpperCase();
 
-  // ---------- Skills state (local, replace with API later) ----------
-  const [skills, setSkills] = useState(() => {
-    // Load from localStorage or start with example list
-    const saved = localStorage.getItem("graduateSkills");
-    return saved
-      ? JSON.parse(saved)
-      : ["React", "Node.js", "Python", "JavaScript", "SQL"];
-  });
-  const [newSkill, setNewSkill] = useState("");
-
-  // Save skills to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("graduateSkills", JSON.stringify(skills));
-  }, [skills]);
-
-  // ---------- Handlers ----------
-  const handleAddSkill = (e) => {
-    e.preventDefault();
-    const trimmed = newSkill.trim();
-    if (trimmed && !skills.includes(trimmed)) {
-      setSkills([...skills, trimmed]);
-      setNewSkill("");
-    }
-  };
-
-  const handleDeleteSkill = (skillToRemove) => {
-    setSkills(skills.filter((skill) => skill !== skillToRemove));
-  };
+  // ---------- Dummy recommendations data ----------
+  const [recommendations] = useState([
+    {
+      id: 1,
+      title: "Frontend Developer Intern",
+      company: "ABC Tech Solutions",
+      location: "Cebu City (Hybrid)",
+      match: 95,
+      skills: ["React", "JavaScript", "CSS"],
+    },
+    {
+      id: 2,
+      title: "Backend Developer Intern",
+      company: "CodeLabs Inc.",
+      location: "Remote",
+      match: 88,
+      skills: ["Node.js", "Python", "SQL"],
+    },
+    {
+      id: 3,
+      title: "UI/UX Design Intern",
+      company: "DesignHub Studio",
+      location: "Manila",
+      match: 82,
+      skills: ["Figma", "User Research", "Prototyping"],
+    },
+    {
+      id: 4,
+      title: "Data Analyst Intern",
+      company: "DataDriven Co.",
+      location: "Cebu City (On-site)",
+      match: 78,
+      skills: ["Python", "Excel", "Tableau"],
+    },
+  ]);
 
   // ---------- Logout ----------
   const handleLogout = () => {
@@ -155,96 +162,61 @@ function GraduateSkills() {
       <main className="graduate-main">
         <header className="graduate-header">
           <div className="graduate-header-info">
-            <h1>My Skills</h1>
+            <h1>Recommendations</h1>
             <p>{userName}</p>
           </div>
           <div className="graduate-avatar">{avatarLetter}</div>
         </header>
 
         <div className="graduate-content">
-          {/* Add Skill Form */}
-          <div className="dashboard-panel" style={{ marginBottom: "24px" }}>
-            <div className="panel-header">
-              <h2>Add a Skill</h2>
-            </div>
-            <form
-              onSubmit={handleAddSkill}
-              style={{ display: "flex", gap: "12px" }}
-            >
-              <input
-                type="text"
-                placeholder="e.g., TypeScript"
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-                style={{
-                  flex: 1,
-                  padding: "12px 16px",
-                  border: "1px solid #dbe4ee",
-                  borderRadius: "12px",
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "15px",
-                  outline: "none",
-                }}
-              />
-              <button
-                type="submit"
-                style={{
-                  padding: "12px 24px",
-                  background: "#0877d1",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: 600,
-                }}
-              >
-                <Plus size={18} />
-                Add
-              </button>
-            </form>
-          </div>
-
-          {/* Skills List */}
           <div className="dashboard-panel">
             <div className="panel-header">
-              <h2>Your Skills ({skills.length})</h2>
+              <h2>Recommended for You</h2>
+              <button
+                type="button"
+                className="view-all-button"
+                onClick={() => navigate("/graduate/internships/browse")}
+              >
+                Browse All
+              </button>
             </div>
-            {skills.length === 0 ? (
-              <p
-                className="empty-message"
-                style={{ color: "#647a96", textAlign: "center", padding: "24px" }}
-              >
-                No skills added yet. Start by adding one above.
-              </p>
+
+            {recommendations.length === 0 ? (
+              <p className="empty-message">No recommendations yet.</p>
             ) : (
-              <div
-                className="listing-list"
-                style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-              >
-                {skills.map((skill) => (
-                  <div
-                    key={skill}
-                    className="listing-item"
-                    style={{ justifyContent: "space-between" }}
-                  >
-                    <strong>{skill}</strong>
-                    <button
-                      onClick={() => handleDeleteSkill(skill)}
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        color: "#991b1b",
-                        cursor: "pointer",
-                        padding: "4px",
-                      }}
-                      title="Delete skill"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+              <div className="applicant-list">
+                {recommendations.map((rec) => (
+                  <div key={rec.id} className="applicant-item">
+                    <div>
+                      <strong>{rec.title}</strong>
+                      <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <Briefcase size={14} />
+                        {rec.company}
+                        <MapPin size={14} style={{ marginLeft: "12px" }} />
+                        {rec.location}
+                      </span>
+                      <div style={{ marginTop: "8px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                        {rec.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            style={{
+                              background: "#eef5fc",
+                              color: "#0877d1",
+                              padding: "2px 10px",
+                              borderRadius: "12px",
+                              fontSize: "13px",
+                              fontWeight: 500,
+                            }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="applicant-result">
+                      <strong>{rec.match}%</strong>
+                      <span className="status-badge accepted">Match</span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -256,4 +228,4 @@ function GraduateSkills() {
   );
 }
 
-export default GraduateSkills;
+export default GraduateRecommendations;
